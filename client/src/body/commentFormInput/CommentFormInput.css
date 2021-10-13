@@ -1,0 +1,28 @@
+.form_input{
+    margin: 10px 0;
+}
+.form_input input{
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    /* min-height: 40px; */
+    height: 10;
+    outline: none;
+}
+.form_input button{
+    background: #333;
+    color: white;
+    padding: 10px 0;
+    width: 150px;
+    margin: 20px 0;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2px solid #333;
+}
+
+.form_input button:hover{
+    background: white;
+    color: #333;
+    border: 2px solid #333;
+}

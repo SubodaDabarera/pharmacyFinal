@@ -1,0 +1,88 @@
+.comment_card{
+    border: 2px solid #ccc;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px;
+}
+.comment_card h3{
+    text-transform: capitalize;
+    color: darkblue;
+}
+.comment_card_row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 5px 0;
+    cursor: pointer;
+}
+.comment_card span{
+    margin-right: 10px;
+    font-size: 14px ;
+}
+.comment_card p{
+    color: #444;
+    line-height: 1.5;
+    margin: 10px 0;
+    font-size: 18px;
+}
+.comment_card .nav_comment{
+    display: flex;
+    flex-wrap: wrap;
+}
+.comment_card .nav_comment p{
+    color: darkblue;
+    padding-right: 10px;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+.comment_card .nav_comment p:hover{
+    text-decoration: underline;
+}
+/* ----------- reply comment ------------- */
+.reply_comment{
+    margin-left: 20px;
+}
+
+/* reply button */
+.addReplyButton{
+    border: none;
+    background-color: #51c24c;
+    width: 100px;
+    height: 40px;
+    margin: 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 2px solid #e3e6e8;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    color: azure;
+}
+
+.addReplyButton:hover{
+    background-color: white;
+    border-color: #51c24c;
+    color: #51c24c;
+}
+
+
+/* delete comment and reply button  */
+.DeleteCommentButton{
+    border: none;
+    background-color: #cf1515;
+    width: fit-content;
+    height: 40px;
+    margin: 10px;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 2px solid #e3e6e8;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    color: azure;
+}
+
+.DeleteCommentButton:hover{
+    background-color: white;
+    border-color: #cf1515;
+    color: #cf1515;
+}

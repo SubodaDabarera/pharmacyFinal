@@ -1,0 +1,99 @@
+.detail_product_card{
+    display: flex !important; 
+    flex-wrap: wrap !important;
+    justify-content: space-around !important;
+}
+.detail_product_card img{
+    max-width: 550px !important;
+    width: 100% !important;
+    min-width: 280px !important;
+    display: block !important;
+    object-fit: cover !important;
+    max-height: 400px !important;
+    margin: 10px 15px !important;
+    border-radius: 5px !important;
+}
+.detail_product_card_content{
+    max-width: 550px !important;
+    min-width: 280px !important;
+    margin: 10px 15px ;
+    padding-right: 0px;
+}
+.detail_product_card_content h2{
+    text-transform: uppercase;
+    font-size: 2rem;
+    color: #333;
+}
+.detail_product_card_content span{
+    color: crimson;
+    font-size: 1.5rem;
+    
+}
+.detail_product_card_content p{
+    margin: 15px 0;
+}
+.detail_product_card_content button{
+    width: 150px;
+    padding: 10px 10px;
+    background: #333;
+    color: #25224a;
+    
+    letter-spacing: 1.2px;
+}
+
+.moreFeedback {
+    color: brown;
+    text-align: left;
+}
+
+/* button buy */
+.buttonBuy{
+   
+    border: none;
+    padding:11px 25px !important;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 15px 4px 0px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #008CBA !important; 
+    color: white !important; 
+    border: 2px solid white;
+    border-radius: 30px;
+    
+    
+}
+
+.buttonBuy:hover{
+    background-color: white !important;
+    color: #008CBA !important;
+    border: 2px solid #008CBA;
+}
+
+/* button add to cart */
+.buttonAddToCart{
+   
+    border: none;
+    padding:11px 25px !important;
+    width: fit-content !important;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #e8bb27 !important; 
+    color: white !important; 
+    border: 2px solid white;
+    border-radius: 30px;
+    
+}
+
+.buttonAddToCart:hover{
+    background-color: white !important;
+    color: #e8bb27 !important;
+    border: 2px solid #e8bb27;
+}
