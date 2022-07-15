@@ -18,27 +18,21 @@ const CommentReport = () => {
     const [products] = state.products
     const [comments, setComments] = useState([])
 
+    const [currentComment, setCurrentComment] = useState([])
 
+
+    // getting all comments
     useEffect(() => {
 
-        products.forEach(product=> {
-            getData(`/comments/report/${product._id}`)         
-                .then(res => {setComments(res.data.comments)
+            getData('/comments/reports/all')         
+                .then(res => {setCurrentComment(res.data.comments)
                 })
                 .catch(err => console.log(err.responce.data.msg) 
                 )
-        })
-
     })
-
-
-   useEffect(() => {
-  
-   }, [comments])
-
-
-    const exampleDoc = () => {
-
+   
+    
+    function exportPDF() {
         const unit = "pt";
         const size = "A4"; // Use A1, A2, A3 or A4
         const orientation = "portrait"; // portrait or landscape
@@ -50,23 +44,19 @@ const CommentReport = () => {
     
         const title = "Comment Report";
         const headers = [["Product ID", "Username", "Date", "Content"]];
-        const tableRows = []
-
-
-        const data = comments.map(comment=> [
+    
+        const data = currentComment.map(comment=> [
             comment.product_id, comment.username, new Date(comment.createdAt).toLocaleString(), comment.content]);
-
-
+    
         let contentX = {
-            startY: 50,
-            head: headers,
-            body: data
+          startY: 50,
+          head: headers,
+          body: data
         };
-
+    
         doc.text(title, marginLeft, 40);
         doc.autoTable(contentX);
         doc.save("CommentReport.pdf")
-
     }
 
 
@@ -77,7 +67,9 @@ const CommentReport = () => {
      
             <div className = "card">
 
-            <button onClick={() => exampleDoc()} className = "replyButtonCH" style = {{width: "180px", marginBottom : "30px", backgroudColor: "#019707"}}>Get the Report</button>
+            {/* <button onClick={() => exampleDoc()} className = "replyButtonCH" style = {{width: "180px", marginBottom : "30px", backgroudColor: "#019707"}}>Get the Report</button> */}
+
+            <button onClick={() => exportPDF()} className = "replyButtonCH" style = {{width: "180px", marginBottom : "30px", backgroudColor: "#019707"}}>Get the Report</button>
 
                 <div className = "table-wrapper">
                     <table width = "100%">

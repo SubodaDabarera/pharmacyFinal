@@ -68,7 +68,11 @@ export default function MiniDrawer(props) {
         <div className={classes.card}>
           <Grid container direction="column" spacing={3}>
             <Grid item xs={12}>
-              <NavMenu user={props.user} />
+              <NavMenu
+                selectedIndex={props.selectedIndex}
+                setSelectedIndex={props.setSelectedIndex}
+                user={props.user}
+              />
             </Grid>
             <Grid item xs={12}>
               <div className={classes.grow} />

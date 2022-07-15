@@ -1,41 +1,29 @@
-import React, { Children, createContext, useEffect, useState } from 'react'
-import {io} from 'socket.io-client'
-import { getData } from './utils/FetchData'
+import React, { Children, createContext, useEffect, useState } from "react";
+import { io } from "socket.io-client";
+import { getData } from "./utils/FetchData";
 
+export const DataContext = createContext();
 
-export const DataContext = createContext()
+export const DataProvider = ({ children }) => {
+  const [products, setProducts] = useState([]);
+  const [socket, setSocket] = useState(null);
 
-export const DataProvider = ({children}) => {
-    const [products, setProducts] = useState([])
-    const [socket, setSocket] = useState(null)
+  useEffect(() => {
+    getData("http://localhost:8000/products")
+      .then((res) => setProducts(res.data.products))
+      .catch((err) => console.log(err.response.data.msg));
 
-    console.log("inside global State")
+    const socket = io.connect("http://localhost:8000");
 
-    // setProducts(res.data.products)
+    setSocket(socket);
 
-    useEffect(() => {
-        getData('http://localhost:8000/products')
-        .then(res => setProducts(res.data.products))
-        .catch(err => console.log(err.response.data.msg))
+    return () => socket.close();
+  }, []);
 
-        const socket = io.connect("http://localhost:8000")
-           
-        setSocket(socket)
+  const state = {
+    products: [products, setProducts],
+    socket,
+  };
 
-        return () => socket.close()
-
-    }, [])
-
-
-    const state = {
-        products: [products, setProducts],
-        socket
-    }
-
-    return(
-        <DataContext.Provider value = {state}>
-            {children}
-        </DataContext.Provider>
-    )
-
-}
+  return <DataContext.Provider value={state}>{children}</DataContext.Provider>;
+};

@@ -127,23 +127,19 @@ exports.signin = (req, res) => {
   // Return error array as response if validation fails
   if (errors.length > 0) {
     return res.status(422).json({ errors: errors });
-
   }
 
   // Check if user exists
   User.findOne({ email: email })
     .then((user) => {
-      
       if (!user) {
         return res.status(404).json({
           errors: [{ user: "not found" }],
         });
-
       } else {
         bcrypt
           .compare(password, user.password)
           .then((isMatch) => {
-
             if (!isMatch) {
               return res
                 .status(400)
@@ -169,7 +165,7 @@ exports.signin = (req, res) => {
                   return res.status(200).json({
                     success: true,
                     token: access_token,
-                    fullName:  user.fullName,
+                    fullName: user.fullName,
                   });
                 }
               }

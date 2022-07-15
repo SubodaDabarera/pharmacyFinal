@@ -18,7 +18,7 @@ import Prescription from "./prescription/Prescription";
 import backgroundImage from "./images/background-image.jpg";
 import SignInSide from "./signIn/components/SignInSide";
 import DetailProduct from "./body/products/detailProduct/DetailProduct";
-import Reports from './report/Reports'
+import Reports from "./report/Reports";
 
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -75,8 +75,9 @@ const useStyles = makeStyles((theme) => ({
 
 function Base() {
   const classes = useStyles();
+  const [products, setProducts] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState();
 
-  
   //Redirect user to signin page if not logged in
   const token = sessionStorage.getItem("userToken");
 
@@ -84,7 +85,6 @@ function Base() {
     jwt.decode(token, { complete: true })
       ? jwt.decode(token, { complete: true }).payload.email
       : null
- 
   );
 
   useEffect(() => {
@@ -96,7 +96,7 @@ function Base() {
     return (
       <>
         <Route path="/" exact>
-          <Home userRole={role} />
+          <Home selectedIndex={selectedIndex} userRole={role} />
         </Route>
         <Route path="/prescription" exact>
           <SignInSide />
@@ -107,18 +107,15 @@ function Base() {
         <Route path="/contact" exact>
           <ContactUs />
         </Route>
-
-
       </>
     );
   };
 
-  
   const loadCustomer = () => {
     return (
       <>
         <Route path="/" exact>
-          <Home userRole={role} />
+          <Home selectedIndex={selectedIndex} userRole={role} />
         </Route>
         <Route path="/prescription" exact>
           <Prescription />
@@ -136,7 +133,6 @@ function Base() {
         <Route path="/reports" exact>
           <Reports />
         </Route>
-
       </>
     );
   };
@@ -166,7 +162,11 @@ function Base() {
                 <Topbar user={role} />
               </Grid>
               <Grid item xs={12}>
-                <SideDrawer user={role} />
+                <SideDrawer
+                  selectedIndex={selectedIndex}
+                  setSelectedIndex={setSelectedIndex}
+                  user={role}
+                />
               </Grid>
 
               <Grid container direction="column" alignItems="center">
@@ -175,11 +175,7 @@ function Base() {
                 ) : (
                   <Switch>{loadCustomer()}</Switch>
                 )}
-
-                
-                 
               </Grid>
-             
             </Grid>
           </Grid>
         </Container>

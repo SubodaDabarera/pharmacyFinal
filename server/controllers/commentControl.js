@@ -77,6 +77,16 @@ const commentControl = {
         }catch(err){
             return res.status(500).json({msg: err.message})
         }
+    },
+
+    getAllComments: async(req, res) => {
+        try{
+            const comments = await commentReport.find()
+            res.json({comments})
+
+        }catch(err){
+            return res.status(500).json({msg: err.message})
+        }
     }
 }
 

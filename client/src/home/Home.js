@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import HeroSection from "./components/HeroSection";
 import "./styles/Home.css";
 
-function Home({props}) {
+function Home(props) {
   return (
     <Grid
       item
@@ -14,11 +14,9 @@ function Home({props}) {
       justify="space-between"
       alignItems="flex-start"
     >
-      
       <Grid item container xs={12}>
-        <HeroSection />
+        <HeroSection selectedIndex={props.selectedIndex} />
       </Grid>
-      
     </Grid>
   );
 }

@@ -28,7 +28,7 @@ function CommentFormInput({id, socket, rating, setReply, send, name, update, set
 
     const commentSubmit = () => {
 
-        const username = sessionStorage.getItem("userName")
+        const username = sessionStorage.getItem("userName").replaceAll('"', '')
         const content = contentRef.current.innerHTML
 
         if(contentRef.current.textContent.trim().length < 20)

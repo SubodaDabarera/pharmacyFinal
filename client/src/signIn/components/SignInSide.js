@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import SnackBarAlert from "../../components/SnackBarAlert";
 import Typography from "@material-ui/core/Typography";
 import { useForm } from "react-hooks-helper";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import FloatCard from "../../components/FloatCard";
 import axios from "axios";
 import BACKEND_URL from "../../Config";
@@ -138,6 +138,9 @@ function SignInSide() {
   // Alert stuff
   const [alertShow, setAlertShow] = useState(false);
   const [alertData, setAlertData] = useState({ severity: "", msg: "" });
+
+  let history = useHistory();
+
   const displayAlert = () => {
     return (
       <SnackBarAlert
@@ -189,13 +192,14 @@ function SignInSide() {
       .then((res) => {
         if (res.data.success) {
           sessionStorage.setItem("userToken", res.data.token);
-          sessionStorage.setItem("userName", res.data.fullName)
+          sessionStorage.setItem("userName", res.data.fullName);
 
           const jwt = require("jsonwebtoken");
           const token = sessionStorage.getItem("userToken");
           const header = jwt.decode(token, { complete: true });
           if (header.payload) {
             window.location = "/";
+            history.goBack();
           } else {
             setAlertData({
               severity: "error",
@@ -239,9 +243,8 @@ function SignInSide() {
     };
 
     if (registration.password == registration.confirmPassword) {
-
       axios
-        .post(`${BACKEND_URL}/api/signup`, registerData)
+        .post(`http://localhost:8000/api/signup`, registerData)
         .then((res) => {
           if (res.data.success) {
             setAlertData({
@@ -266,19 +269,16 @@ function SignInSide() {
             handleAlert();
           }
         });
-    }
-    else {
+    } else {
       setAlertData({
         severity: "error",
         msg: "Password missmatched!",
       });
       handleAlert();
     }
-
   };
 
   const classes = useStyles();
-
 
   if (sessionStorage.getItem("userToken")) {
     return <Redirect to="/" />;
@@ -342,7 +342,11 @@ function SignInSide() {
                   </Button>
                 </form>
               </div>
-              <center><Link to = "/adminSignIn"><h3>I am an Admin</h3> </Link> </center>
+              <center>
+                <Link to="/adminSignIn">
+                  <h3>I am an Admin</h3>{" "}
+                </Link>{" "}
+              </center>
             </FloatCard>
           </Grid>
 

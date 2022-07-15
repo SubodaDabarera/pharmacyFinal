@@ -8,12 +8,8 @@
         "display_name": "Comment Report",
         "route": "/feedbackManager/CommentReport",
         "icon": "bx bxs-file-png"
-    },
-   
-    {
-        "display_name": "settings",
-        "route": "/feedbackManager/settings",
-        "icon": "bx bx-cog"
     }
+   
+  
 ]
 
