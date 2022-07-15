@@ -4,11 +4,10 @@ import CardContent from "@material-ui/core/CardContent";
 import React from "react";
 import Lottie from "react-lottie";
 // import { Link, Router, Route } from "react-router-dom";
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import HeroImage from "../../components/lotties/heroimage";
-import Products from "../../body/products/Products"
+import Products from "../../body/products/Products";
 import DetailProduct from "../../body/products/detailProduct/DetailProduct";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function HeroSection() {
+function HeroSection(props) {
   const classes = useStyles();
 
   const defaultOptions = {
@@ -69,14 +68,9 @@ function HeroSection() {
   };
 
   return (
-    
-     <Card className={classes.root}>
-     
-       <Products /> 
-
-     </Card>
-
-    
+    <Card className={classes.root}>
+      <Products selectedIndex={props.selectedIndex} />
+    </Card>
   );
 }
 
