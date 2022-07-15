@@ -222,6 +222,15 @@ export default function Topbar(props) {
   // ##################----Admin
   const [isFeedbackAdmin, setIsFeedbackAdmin] = useState(false)
 
+  useState(() => {
+    if (sessionStorage.getItem("userRole")) {
+
+      if (sessionStorage.getItem("userRole").replaceAll('"', '') == "Feedback Manager") {
+            setIsFeedbackAdmin(true)
+      }
+  }
+  })
+
  
 
   const [loggedIn, setLoggedIn] = useState(
@@ -278,25 +287,31 @@ export default function Topbar(props) {
               </div>
               <div className={classes.grow} />
               <div className={classes.sectionDesktop}>
-                {loggedIn ? (
+                {loggedIn || isFeedbackAdmin ? (
                   <div>
-                    <Link to="/profile">
-                      <IconButton className={classes.primaryButton}>
-                        <AccountBoxIcon />
-                      </IconButton>
-                    </Link>
-                    <Link to="/prescription">
-                      <Button className={classes.primaryButton}>
-                        Upload Your Prescription
-                      </Button>
-                    </Link>
+                    {
+                      !isFeedbackAdmin &&
+                      <>
+                        <Link to="/profile">
+                          <IconButton className={classes.primaryButton}>
+                            <AccountBoxIcon />
+                          </IconButton>
+                        </Link>
+                        <Link to="/prescription">
+                          <Button className={classes.primaryButton}>
+                            Upload Your Prescription
+                          </Button>
+                        </Link>
+                      </>
+                    }
+                      
                       {/* ############################################################################ */}
 
                       {
                         isFeedbackAdmin &&
-                        <Link to="/feedbackManager/dashbord">
-                          <Button className={classes.signIn}>Admin</Button>
-                        </Link>
+                          <Link to="/feedbackManager/dashbord">
+                            <Button className={classes.signIn}>Admin</Button>
+                          </Link>
                       }
                     {/* ############################################################################## */}
 
@@ -304,8 +319,10 @@ export default function Topbar(props) {
                       onClick={() => {
                         sessionStorage.removeItem("userToken");
                         sessionStorage.removeItem("userName");
+                        sessionStorage.removeItem("userRole");
                         setLoggedIn(false);
-                        window.location = "/";
+                        // window.location = "/";
+                        window.location.reload(false);
                       }}
                       className={classes.signIn}
                     >
