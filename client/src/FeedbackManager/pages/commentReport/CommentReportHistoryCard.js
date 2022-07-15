@@ -22,7 +22,7 @@ const CommentReportHistoryCard = (props) => {
     return (
         <tbody>
             <tr>
-                <td >{props.product.title}</td>
+                <td >{props.product.name}</td>
                 <td >{props.comment.username}</td>
                 <td >{props.comment.content}</td>
                 <td width = "12%">{new Date(props.comment.createdAt).toLocaleString()}</td>
