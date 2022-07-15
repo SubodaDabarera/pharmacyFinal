@@ -3,7 +3,7 @@ import { deleteComment, DeleteReply } from '../../utils/FetchData'
 import CommentFormInput from '../commentFormInput/CommentFormInput'
 import CommentCard from './CommentCard'
 
-function CommentItem({comment, socket}) {
+function CommentItem({ comment, socket }) {
 
     const [reply, setReply] = useState(false)
     const [name, setName] = useState(sessionStorage.getItem("userName"))
@@ -23,23 +23,34 @@ function CommentItem({comment, socket}) {
 
     useState(() => {
 
-        if(name == comment.username){
+        if (name == comment.username) {
             setIsActualUser(true)
         }
     })
 
     useState(() => {
-        if(sessionStorage.getItem("userRole") == ""){       //######################----Admin
-            setIsFeedbackAdmin(true)
+       
+        if (sessionStorage.getItem("userRole")) {
+
+            if (sessionStorage.getItem("userRole").replaceAll('"', '') == "Feedback Manager") {
+                setIsFeedbackAdmin(true)
+
+                setName(name.replaceAll('"', ''))
+            }
         }
+       
     })
- 
+    console.log(sessionStorage.getItem("userRole"))
+    //console.log(name)
+
     //delete comment
     useEffect(() => {
         deleteComment(`/comments/${commentDelete}`)
             .then(res => {
                 console.log("Comment deleted")
+                window.location.reload(false);
                 return alert('Comment deleted!')
+               
             })
             .catch(err => console.log("Comment delete unsuccess"))
     }, [commentDelete])
@@ -47,11 +58,11 @@ function CommentItem({comment, socket}) {
     //delete reply
     useEffect(() => {
         DeleteReply(`/comments/reply/${replyDelete}`)
-        .then(res => {
-            console.log("Reply Deleted")
-            return alert('Reply deleted!')
-        })
-        .catch(err => console.log("Reply delete unsuccess"))
+            .then(res => {
+                console.log("Reply Deleted")
+                
+            })
+            .catch(err => console.log("Reply delete unsuccess"))
     }, [replyDelete])
 
 
@@ -80,8 +91,8 @@ function CommentItem({comment, socket}) {
     }
 
 
-    if(comment.reply) {
-        if(comment.reply[0]){
+    if (comment.reply) {
+        if (comment.reply[0]) {
             updateDetails = comment.reply[0].content
         }
     }
@@ -89,71 +100,71 @@ function CommentItem({comment, socket}) {
 
     return (
         <div>
-            <CommentCard comment = {comment}>
-                <div className = "nav_comment">
-                    {   
+            <CommentCard comment={comment}>
+                <div className="nav_comment">
+                    {
                         isFeedbackAdmin &&
                         <>
-                            <button className = "addReplyButton" onClick={() => handleReply(comment.username)}>Reply</button> {'  '}
+                            <button className="addReplyButton" onClick={() => handleReply(comment.username)}>Reply</button> {'  '}
                         </>
                     }
                     {
-                        isActualUser || isFeedbackAdmin?
-                        <button className = "DeleteCommentButton" onClick={() => handleCommentDelete(comment._id)}>Delete Comment</button>
-                             : null
-                    } 
-        
-                    {   
+                        isActualUser || isFeedbackAdmin ?
+                            <button className="DeleteCommentButton" onClick={() => handleCommentDelete(comment._id)}>Delete Comment</button>
+                            : null
+                    }
+
+                    {
                         reply &&
                         <p onClick={hideReply}>Hide Reply</p>
                     }
 
                 </div>
-                <div className = "reply_comment">
+                <div className="reply_comment">
                     {
                         comment.reply.map(rep => (
-                            <CommentCard comment = {rep} key={rep._id}>
-                                
+                            <CommentCard comment={rep} key={rep._id}>
+
                                 {
                                     isFeedbackAdmin &&
                                     <>
-                                        <button className = "DeleteCommentButton" onClick={() => handleReplyDelete(comment._id)}>Delete Reply</button>
-                                        <button className = "addReplyButton" onClick={() => handleUpdateReply(comment._id)}>Edit Reply</button>
+                                        <button className="DeleteCommentButton" onClick={() => handleReplyDelete(comment._id)}>Delete Reply</button>
+                                        <button className="addReplyButton" onClick={() => handleUpdateReply(comment._id)}>Edit Reply</button>
                                     </>
                                 }
 
                                 {
-                                    editReply && 
-                                    <CommentFormInput 
-                                        id= {comment._id}
-                                        socket= {socket}
-                                        name = {name}
-                                        setEditReply = {setEditReply}
-                                        send= "replyComment"
-                                        update = {updateDetails}
+                                    editReply &&
+                                    <CommentFormInput
+                                        id={comment._id}
+                                        socket={socket}
+                                        name={name}
+                                        setEditReply={setEditReply}
+                                        send="replyComment"
+                                        update={updateDetails}
                                     />
                                 }
-                                    
+
                             </CommentCard>
                         ))
-                        
+
                     }
                 </div>
                 {
-                    reply && 
-                    <CommentFormInput 
-                        id= {comment._id}
-                        socket= {socket}
-                        name = {name}
-                        setReply = {setReply}
-                        send= "replyComment"
-                        update = {updateDetails}
+                    reply &&
+                    <CommentFormInput
+                        id={comment._id}
+                        socket={socket}
+                        name={name}
+                        setReply={setReply}
+                        send="replyComment"
+                        update={updateDetails}
                     />
                 }
 
 
             </CommentCard>
-            
+
         </div>
     )
 }
