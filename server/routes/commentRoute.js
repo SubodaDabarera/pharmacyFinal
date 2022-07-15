@@ -10,4 +10,7 @@ router.put('/comments/reply/:id', commentControl.DeleteReply)
 // getting commentReport data
 router.get('/comments/report/:id', commentControl.getCommentReport)
 
+//getting all comments
+router.get('/comments/reports/all', commentControl.getAllComments)
+
 module.exports = router
